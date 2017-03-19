@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Start ptp4l
+#
+
+case "$1" in
+  start)
+	printf "Starting ptp4l: "
+	start-stop-daemon -S -q --background  -x /sbin/ptp4l -- -f /etc/ptp4l.conf -q
+	if [ $? != 0 ]; then
+		echo "FAILED"
+		exit 1
+	else
+		echo "OK"
+	fi
+	;;
+  stop)
+	printf "Stopping ptp4l: "
+	start-stop-daemon -K -q -x /sbin/ptp4l
+	echo "OK"
+	;;
+  restart|reload)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
