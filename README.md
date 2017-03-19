@@ -1,1 +1,1 @@
-$ aes67-pi3-buildroot
+An AES67 audio mixer for the Pi3
