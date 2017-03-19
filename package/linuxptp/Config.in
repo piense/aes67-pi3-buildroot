@@ -1,0 +1,4 @@
+config BR2_PACKAGE_LINUXPTP
+	bool "linuxptp"
+	help
+		ptp daemon, needs kernel support. 

@@ -1,0 +1,13 @@
+--- ./clock.c
++++ ./clock.c
+@@ -987,8 +987,8 @@
+ 		if (iface->ts_info.valid &&
+ 		    ((iface->ts_info.so_timestamping & required_modes) != required_modes)) {
+ 			pr_err("interface '%s' does not support "
+-			       "requested timestamping mode", iface->name);
+-			return NULL;
++			       "requested timestamping mode, ignoring since the Pi driver is wrong.", iface->name);
++//			return NULL;
+ 		}
+ 	}
+ 
