@@ -1,0 +1,3 @@
+#!/bin/ash
+
+ptpd2 -s -i eth 0 -S /stats

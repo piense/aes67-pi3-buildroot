@@ -1,0 +1,15 @@
+#!/bin/sh
+
+mount /dev/mmcblk0p2 /mnt/data
+
+if ! mount | grep -q "mmcblk0p2" ; then
+ echo -e "n\np\n2\n\n\nw\n" | fdisk /dev/mmcblk0
+ umount /dev/mmcblk0p1
+ hdparm -z /dev/mmcblk0
+ mkfs.ext3 -F /dev/mmcblk0p2
+ mount /dev/mmcblk0p1
+ mount /dev/mmcblk0p2
+ mkdir /mnt/data/config
+ mkdir /mnt/data/log
+fi
+
