@@ -1,0 +1,10 @@
+#!/bin/sh
+
+#wifi keeps coming up without an ip
+#should fix the root cause but this should do it for now
+dhcpcd wlan0
+
+#Don't know why eth0 sometimes doesn't come up
+dhcpcd eth0
+
+

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/sbin/watchdog -T 3 -t 1 /dev/watchdog
+

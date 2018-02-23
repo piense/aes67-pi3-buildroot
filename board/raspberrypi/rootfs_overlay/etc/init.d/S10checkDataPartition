@@ -1,0 +1,44 @@
+#!/bin/sh
+
+LOG_FILE="/logfile"
+# Close STDOUT file descriptor
+exec 1<&-
+# Close STDERR FD
+exec 2<&-
+
+# Open STDOUT as $LOG_FILE file for read and write.
+exec 1<>$LOG_FILE
+
+# Redirect STDERR to STDOUT
+exec 2>&1
+
+i=0
+
+while [ $i -lt 10 ]
+do
+if [ -e "/dev/mmcblk0p1" ] ; then
+ i="10"
+else
+ sleep .5
+fi
+let i++
+done
+
+umount /dev/mmcblk0p2
+fsck -y /dev/mmcblk0p2
+mount /dev/mmcblk0p2 /mnt/data
+
+if ! mount | grep -q "mmcblk0p2" ; then
+ echo -e "n\np\n2\n\n\nw\n" | fdisk /dev/mmcblk0
+ umount /dev/mmcblk0p1
+ hdparm -z /dev/mmcblk0
+ mkfs.ext3 -F /dev/mmcblk0p2
+ mount /dev/mmcblk0p1
+ mount /dev/mmcblk0p2
+ mkdir /mnt/data/config
+ mkdir /mnt/data/log
+ cp /etc/wpa_supplicant.conf /mnt/data/config
+ cp /etc/ser2net.conf /mnt/data/config
+ cp /etc/network/defaultInterfaces /mnt/data/config/interfaces
+fi
+

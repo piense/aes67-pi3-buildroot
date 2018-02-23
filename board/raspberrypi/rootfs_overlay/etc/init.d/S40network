@@ -2,15 +2,20 @@
 #
 # Start the network....
 #
-# sleep 1 is to let the hardware come up
+# sleep 3 is to let the hardware come up
 # Debian ifupdown needs the /run/network lock directory
 mkdir -p /run/network
 
 case "$1" in
   start)
  	echo "Starting network..."
-	sleep 1
-	/sbin/ifup -a
+	sleep 3
+	if cat /sys/class/net/eth0/operstate | grep -q "up" ; then
+		/sbin/ifup eth0
+	fi
+	if [ -e /sys/class/net/wlan0/address ]; then
+		/sbin/ifup wlan0
+	fi
 	;;
   stop)
 	printf "Stopping network..."
