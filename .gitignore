@@ -22,6 +22,7 @@
 /fs
 /linux
 /output
+!/output/images/sdcard.img
 /package/*
 !/package/Config.in
 !/package/linuxptp
